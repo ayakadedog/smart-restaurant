@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.restaurant.mapper.InventoryMapper">
+
+    <select id="selectInventory">
+        select * from inventory
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="inventory_id != null">
+                and category_id = #{categoryId}
+            </if>
+        </where>
+        order by created_time desc
+    </select>
+
+    <!-- Insert statement to save an inventory -->
+    <insert id="insertInventory">
+        INSERT INTO inventory (
+            id,
+            name,
+            purchase_price,
+            amount,
+            purchase_place,
+            image,
+            category_id,
+            purchase_date,
+            expiration_time,
+            expiration_date,
+            description,
+            change_name,
+            change_date,
+            change_purpose,
+            alert_name,
+            alert_expiration_date,
+            alert_time,
+            alert_word,
+            modified_time,
+            created_user,
+            created_time,
+            modified_user
+        ) VALUES (
+                     #{id},
+                     #{name},
+                     #{purchasePrice},
+                     #{amount},
+                     #{purchasePlace},
+                     #{image},
+                     #{categoryId},
+                     #{purchaseDate},
+                     #{expirationTime},
+                     #{expirationDate},
+                     #{description},
+                     #{changeName},
+                     #{changeDate},
+                     #{changePurpose},
+                     #{alertName},
+                     #{alertExpirationDate},
+                     #{alertTime},
+                     #{alertWord},
+                     #{modifiedTime},
+                     #{createdUser},
+                     #{createdTime},
+                     #{modifiedUser}
+                 )
+    </insert>
+    <update id="updateInventory">
+        UPDATE inventory
+        <set>
+            <if test="inventoryName != null and inventoryName != ''">
+                inventory_name = #{inventoryName},
+            </if>
+            <if test="purchasePrice != null">
+                purchase_price = #{purchasePrice},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="purchasePlace != null and purchasePlace != ''">
+                purchase_place = #{purchasePlace},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="purchaseDate != null">
+                purchase_date = #{purchaseDate},
+            </if>
+            <if test="expirationTime != null">
+                expiration_time = #{expirationTime},
+            </if>
+            <if test="expirationDate != null">
+                expiration_date = #{expirationDate},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description}
+            </if>
+        </set>
+        WHERE inventory_id = #{inventoryId}
+    </update>
+
+    <select id="list" resultType="com.restaurant.entity.Inventory">
+        select * from inventory
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+        </where>
+        order by created_time desc
+    </select>
+
+</mapper>

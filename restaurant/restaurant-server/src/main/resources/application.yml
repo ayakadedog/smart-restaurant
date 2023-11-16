@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${restaurant.datasource.driver-class-name}
+      url: jdbc:mysql://${restaurant.datasource.host}:${restaurant.datasource.port}/${restaurant.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${restaurant.datasource.username}
+      password: ${restaurant.datasource.password}
+    redis:
+      host: ${restaurant.redis.host}
+      port: ${restaurant.redis.port}
+#      password : ${restaurant.redis.password}
+#      database: ${restaurant.redis.database}
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.restaurant.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      restaurant:
+        mapper: debug
+        service: info
+        controller: info
+
+restaurant:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: itcast
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+
+    # 设置jwt签名加密时使用的秘钥
+    user-secret-key: itheima
+    # 设置jwt过期时间
+    user-ttl: 7200000
+    user-token-name: authentication
+
+  wechat:
+    appid: ${restaurant.wechat.appid}
+    secret: ${restaurant.wechat.secret}
+
+  alioss :
+    endpoint : ${restaurant.alioss.endpoint}
+    access-key-id : ${restaurant.alioss.access-key-id}
+    access-key-secret : ${restaurant.alioss.access-key-secret}
+    bucket-name : ${restaurant.alioss.bucket-name}
+
+  yuapi :
+    client :
+      access-key : ao21rejd9rko7ucqsae9c65seijdpxqv
+      secret-key : 4kunurf2h6o4ys4aeybrsd3y77q8vrku
